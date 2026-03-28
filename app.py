@@ -130,7 +130,7 @@ def search():
     def solve(path, current_total_len):
         if time.time() - start_time > timeout or (limit_en and len(results) >= limit): return
         if len_mode == 'diff' and len(path) > 1:
-            lens = [len(x) for x in path]; 
+            lens = [len(x) for x in path]
             if len(lens) != len(set(lens)): return
 
         if len(path) == max_len:
@@ -145,8 +145,8 @@ def search():
                     for itm in group:
                         if ':' in itm:
                             ps = itm.split(':')
-                            if ps[0].upper() == 'S': g_shift = int(ps[1])
-                            else: target_cnt = int(ps[0] if ps[0].isdigit() else ps[0])
+                            if ps.upper() == 'S': g_shift = int(ps)
+                            else: target_cnt = int(ps if ps.isdigit() else ps)
                         else: items.append(itm)
                     total = sum(norm_t.count("".join([get_base_char(shift_kana(c, g_shift), filt_s, filt_d, filt_h) for c in it])) for it in items)
                     if (d.get('exclusive_choice') and total != target_cnt) or (not d.get('exclusive_choice') and total < target_cnt): return False
@@ -194,5 +194,8 @@ def search():
     elif sm == 'random': random.shuffle(results)
     return jsonify({"routes": results, "count": len(results)})
 
+# Renderなどの本番環境に対応するための起動設定
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # 外部からのアクセスを許可するために host='0.0.0.0' にし、ポートは環境変数から取得
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
