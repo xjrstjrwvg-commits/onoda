@@ -17,6 +17,15 @@
         .custom-scroll { max-height: 300px; overflow-y: auto; scrollbar-width: none; }
         summary { list-style: none; cursor: pointer; }
         summary::-webkit-details-marker { display: none; }
+
+        /* 詳細設定内の入力欄を強調 */
+        details input, details select, details textarea {
+            @apply border-2 border-slate-300 dark:border-slate-600 py-4 px-4 my-1;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .dark details input, .dark details select, .dark details textarea {
+            background-color: rgba(30, 41, 59, 0.7);
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-3 pb-24" onchange="saveSettings()" oninput="saveSettings()">
@@ -40,74 +49,74 @@
                 <input id="ec" placeholder="終了字" class="w-full">
             </div>
 
-            <!-- 詳細設定の折り畳み開始 -->
-            <details class="group">
-                <summary class="flex justify-center items-center py-2 border-t border-slate-100 dark:border-slate-800 mt-2">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest group-open:hidden">詳細設定を表示</span>
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest hidden group-open:block">詳細設定を閉じる</span>
+            <!-- 詳細設定の折り畳み -->
+            <details class="group border border-slate-200 dark:border-slate-700 rounded-2xl p-2 bg-slate-50/50 dark:bg-slate-800/20">
+                <summary class="flex justify-center items-center py-3 cursor-pointer">
+                    <span class="text-[11px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest group-open:hidden">＋ 詳細設定を表示</span>
+                    <span class="text-[11px] font-black text-rose-500 uppercase tracking-widest hidden group-open:block">－ 詳細設定を閉じる</span>
                 </summary>
                 
-                <div class="space-y-4 pt-2">
-                    <div class="grid grid-cols-2 gap-2 border-t border-slate-100 dark:border-slate-800 pt-3">
+                <div class="space-y-5 pt-2 pb-4 px-1">
+                    <div class="grid grid-cols-2 gap-3 border-t border-slate-200 dark:border-slate-700 pt-4">
                         <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-blue-500 uppercase ml-1">全語開始字</label>
+                            <label class="text-[10px] font-bold text-blue-500 uppercase ml-1">全語開始字</label>
                             <input id="asc" placeholder="ア,カ" class="w-full">
                         </div>
                         <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-blue-500 uppercase ml-1">全語終了字</label>
+                            <label class="text-[10px] font-bold text-blue-500 uppercase ml-1">全語終了字</label>
                             <input id="aec" placeholder="ン,イ" class="w-full">
                         </div>
                     </div>
 
-                    <div class="space-y-1 border-t border-slate-100 dark:border-slate-800 pt-3">
-                        <label class="text-[9px] font-bold text-emerald-500 uppercase ml-1">使える文字チェックリスト</label>
+                    <div class="space-y-1 border-t border-slate-200 dark:border-slate-700 pt-4">
+                        <label class="text-[10px] font-bold text-emerald-500 uppercase ml-1">使える文字チェックリスト</label>
                         <input id="valid_chars" placeholder="アイウエオ (空欄で全許可)" class="w-full">
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3 border-t border-slate-100 dark:border-slate-800 pt-3">
+                    <div class="grid grid-cols-2 gap-3 border-t border-slate-200 dark:border-slate-700 pt-4">
                         <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase ml-1 tracking-widest">グループ必須 (:n可)</label>
-                            <textarea id="gc" placeholder="アメリカ,イギリス:2" class="w-full h-16 resize-none text-[10px]"></textarea>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase ml-1 tracking-widest">グループ必須 (:n可)</label>
+                            <textarea id="gc" placeholder="アメリカ,イギリス:2" class="w-full h-20 resize-none text-[10px]"></textarea>
                         </div>
                         <div class="space-y-1 text-orange-600">
-                            <label class="text-[9px] font-bold uppercase ml-1 tracking-widest">選択必須 (:n可)</label>
-                            <textarea id="cc" placeholder="ン,ン:2" class="w-full h-16 resize-none text-[10px]"></textarea>
+                            <label class="text-[10px] font-bold uppercase ml-1 tracking-widest">選択必須 (:n可)</label>
+                            <textarea id="cc" placeholder="ン,ン:2" class="w-full h-20 resize-none text-[10px]"></textarea>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2 border-t border-slate-100 dark:border-slate-800 pt-3">
+                    <div class="grid grid-cols-2 gap-3 border-t border-slate-200 dark:border-slate-700 pt-4">
                         <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase ml-1">使用不可文字</label>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">使用不可文字</label>
                             <input id="exc" placeholder="ン,ガ" class="w-full">
                         </div>
                         <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-rose-400 uppercase ml-1">禁止開始文字</label>
+                            <label class="text-[10px] font-bold text-rose-400 uppercase ml-1">禁止開始文字</label>
                             <input id="bsc" placeholder="ガ,ザ" class="w-full">
                         </div>
                     </div>
 
-                    <div class="space-y-2 border-t border-slate-100 dark:border-slate-800 pt-3">
+                    <div class="space-y-3 border-t border-slate-200 dark:border-slate-700 pt-4">
                         <div class="flex justify-between items-center">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">50音ずらし (物理位置連動)</label>
-                            <input type="checkbox" id="use_shift" class="w-5 h-5 cursor-pointer accent-blue-600">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">50音ずらし (物理位置連動)</label>
+                            <input type="checkbox" id="use_shift" class="w-6 h-6 cursor-pointer accent-blue-600">
                         </div>
-                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/30 p-2 rounded-xl">
-                            <div class="flex gap-2 font-bold text-[10px]">
-                                <label class="cursor-pointer flex items-center gap-1"><input type="radio" name="shift_mode" value="abs" checked class="w-3 h-3"> ±</label>
-                                <label class="cursor-pointer flex items-center gap-1"><input type="radio" name="shift_mode" value="normal" class="w-3 h-3"> 通常</label>
+                        <div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 p-3 rounded-xl">
+                            <div class="flex gap-4 font-bold text-[11px]">
+                                <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="shift_mode" value="abs" checked class="w-4 h-4"> ±</label>
+                                <label class="cursor-pointer flex items-center gap-2"><input type="radio" name="shift_mode" value="normal" class="w-4 h-4"> 通常</label>
                             </div>
-                            <div class="flex items-center gap-2 ml-auto">
+                            <div class="flex items-center gap-3 ml-auto">
                                 <button type="button" onclick="adjustVal('ks_abs',-1)" class="step-btn">-</button>
-                                <input type="number" id="ks_abs" value="1" class="w-10 text-center bg-transparent border-none text-sm font-bold">
+                                <input type="number" id="ks_abs" value="1" class="w-12 text-center bg-transparent border-none text-sm font-bold">
                                 <button type="button" onclick="adjustVal('ks_abs',1)" class="step-btn">+</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2 border-t border-slate-100 dark:border-slate-800 pt-3">
+                    <div class="grid grid-cols-2 gap-3 border-t border-slate-200 dark:border-slate-700 pt-4">
                         <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">ソート順</label>
-                            <select id="sort_mode" class="w-full text-[10px] font-bold">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">ソート順</label>
+                            <select id="sort_mode" class="w-full text-[11px] font-bold">
                                 <option value="default">検索順</option>
                                 <option value="kana">50音順</option>
                                 <option value="len_asc">文字数少ない順</option>
@@ -116,8 +125,8 @@
                             </select>
                         </div>
                         <div class="space-y-1">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">適用範囲</label>
-                            <select id="unify_scope" class="w-full text-[10px] font-bold">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">適用範囲</label>
+                            <select id="unify_scope" class="w-full text-[11px] font-bold">
                                 <option value="all">すべて</option>
                                 <option value="conn">接続のみ</option>
                                 <option value="filter">制約のみ</option>
@@ -125,27 +134,26 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] font-bold border-t border-slate-100 dark:border-slate-800 pt-3">
-                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="allow_daku"> 濁点OK</label>
-                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="allow_handaku"> 半濁点OK</label>
-                        <label class="flex items-center gap-1 cursor-pointer text-indigo-600"><input type="checkbox" id="auto_recovery"> 遡り接続</label>
-                        <label class="flex items-center gap-1 cursor-pointer text-orange-600"><input type="checkbox" id="unify_small"> 大=小</label>
-                        <label class="flex items-center gap-1 cursor-pointer text-blue-600"><input type="checkbox" id="rt"> 牛耕</label>
-                        <label class="flex items-center gap-1 cursor-pointer text-blue-600"><input type="checkbox" id="once"> 単一制約</label>
-                        <label class="flex items-center gap-1 cursor-pointer text-rose-600"><input type="checkbox" id="char_limit_mode"> 重複禁止</label>
-                        <label class="flex items-center gap-1 cursor-pointer text-rose-500"><input type="checkbox" id="exclude_conjugate"> 共役排除</label>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-[11px] font-bold border-t border-slate-200 dark:border-slate-700 pt-4">
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="allow_daku" class="w-4 h-4"> 濁点OK</label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="allow_handaku" class="w-4 h-4"> 半濁点OK</label>
+                        <label class="flex items-center gap-2 cursor-pointer text-indigo-600"><input type="checkbox" id="auto_recovery" class="w-4 h-4"> 遡り接続</label>
+                        <label class="flex items-center gap-2 cursor-pointer text-orange-600"><input type="checkbox" id="unify_small" class="w-4 h-4"> 大=小</label>
+                        <label class="flex items-center gap-2 cursor-pointer text-blue-600"><input type="checkbox" id="rt" class="w-4 h-4"> 牛耕</label>
+                        <label class="flex items-center gap-2 cursor-pointer text-blue-600"><input type="checkbox" id="once" class="w-4 h-4"> 単一制約</label>
+                        <label class="flex items-center gap-2 cursor-pointer text-rose-600"><input type="checkbox" id="char_limit_mode" class="w-4 h-4"> 重複禁止</label>
+                        <label class="flex items-center gap-2 cursor-pointer text-rose-500"><input type="checkbox" id="exclude_conjugate" class="w-4 h-4"> 共役排除</label>
                     </div>
 
-                    <div class="space-y-1 text-right border-t border-slate-100 dark:border-slate-800 pt-3">
-                        <label class="text-[9px] font-bold text-slate-400 uppercase tracking-widest ml-1 text-right block">物理ずらし / 文字計</label>
-                        <div class="flex justify-end gap-2">
-                            <input type="number" id="ps" value="0" class="w-10 text-center text-sm font-bold">
-                            <input type="number" id="ttl" placeholder="計" class="w-12 text-center text-sm font-bold">
+                    <div class="space-y-1 text-right border-t border-slate-200 dark:border-slate-700 pt-4">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1 text-right block">物理ずらし / 文字計</label>
+                        <div class="flex justify-end gap-3">
+                            <input type="number" id="ps" value="0" class="w-14 text-center text-sm font-bold border-2">
+                            <input type="number" id="ttl" placeholder="計" class="w-16 text-center text-sm font-bold border-2">
                         </div>
                     </div>
                 </div>
             </details>
-            <!-- 詳細設定の折り畳み終了 -->
 
             <div class="grid grid-cols-2 gap-4 border-t border-slate-100 dark:border-slate-800 pt-3">
                 <div class="space-y-1">
@@ -191,12 +199,12 @@
         <div id="res" class="space-y-3 pb-20"></div>
     </div>
 
-    <!-- 辞書マネージャ（折りたたみ） -->
+    <!-- 辞書マネージャ -->
     <div id="dict-manager" class="hidden fixed inset-0 z-50 bg-white dark:bg-slate-950 p-5 overflow-y-auto">
         <button onclick="document.getElementById('dict-manager').classList.add('hidden')" class="mb-5 font-bold text-rose-500">CLOSE</button>
         <div class="grid grid-cols-2 gap-2 mb-5">
-            <button onclick="bulkSet('white')" class="bg-slate-100 p-3 rounded-xl font-bold">全開放</button>
-            <button onclick="bulkSet('red')" class="bg-rose-100 text-rose-600 p-3 rounded-xl font-bold">全禁止</button>
+            <button onclick="bulkSet('white')" class="bg-slate-100 dark:bg-slate-800 p-3 rounded-xl font-bold">全開放</button>
+            <button onclick="bulkSet('red')" class="bg-rose-100 dark:bg-rose-900/30 text-rose-600 p-3 rounded-xl font-bold">全禁止</button>
         </div>
         <div id="dict-list" class="grid grid-cols-2 gap-1"></div>
     </div>
