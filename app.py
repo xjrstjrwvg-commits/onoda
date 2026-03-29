@@ -2,7 +2,11 @@ import os, time, sys, re, random
 from flask import Flask, render_template, request, jsonify
 from collections import Counter, defaultdict
 # 外部化した辞書データをインポート
-from dictionary import DICTIONARY_MASTER
+try:
+    from dictionary import DICTIONARY_MASTER
+except ImportError:
+    # 辞書ファイルがない場合のエラー回避（デバッグ用）
+    DICTIONARY_MASTER = {"country": ["ニホン"], "capital": ["トウキョウ"]}
 
 sys.setrecursionlimit(10000)
 app = Flask(__name__)
@@ -194,8 +198,9 @@ def search():
     elif sm == 'random': random.shuffle(results)
     return jsonify({"routes": results, "count": len(results)})
 
-# Renderなどの本番環境に対応するための起動設定
+# Render環境で正常に通信を待機するための設定
 if __name__ == '__main__':
-    # 外部からのアクセスを許可するために host='0.0.0.0' にし、ポートは環境変数から取得
-    port = int(os.environ.get("PORT", 5000))
+    # RenderはPORT環境変数を割り当てるため、それを優先的に使用
+    # host='0.0.0.0' に設定しないと、外部（Renderのプロキシ）からの通信が届きません
+    port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
